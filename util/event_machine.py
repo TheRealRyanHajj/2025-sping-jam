@@ -9,10 +9,10 @@ class EventMachine:
         grefs["EventMachine"] = self
         # Dictionary to track key states
         self.key_states = {
-            "isMovingUp": False,
-            "isMovingRight": False,
-            "isMovingDown": False,
-            "isMovingLeft": False,
+            "keyWDown": False,
+            "keyDDown": False,
+            "keySDown": False,
+            "keyADown": False,
             "keyEDown": False,
             "keyTabDown": False,
             "keyShiftDown": False,

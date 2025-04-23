@@ -13,7 +13,7 @@ class Game:
         pygame.mouse.set_cursor((0,0),pygame.image.load("assets\images\gui\cursor.png"))
 
         # Making a screen with pygame
-        RESOLUTION_X, RESOLUTION_Y = 320,180 #Sreen Size
+        RESOLUTION_X, RESOLUTION_Y = 640,360
         self.window = pygame.display.set_mode((RESOLUTION_X, RESOLUTION_Y), pygame.FULLSCREEN | pygame.SCALED)
         grefs["main"] = self
 

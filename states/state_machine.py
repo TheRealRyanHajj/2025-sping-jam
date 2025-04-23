@@ -20,9 +20,9 @@ class StateMachine:
         self.state_stack.append(self.state)
         self.state.enter()
 
-    def update(self,window):
+    def update(self):
         if self.state:
-            self.state.update(window)
+            self.state.update()
     
     def exit_state(self):
         self.state.exit()

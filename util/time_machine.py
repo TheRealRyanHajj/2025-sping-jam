@@ -8,4 +8,4 @@ class TimeMachine:
         self.clock = pygame.time.Clock()
 
     def update(self):
-        self.dt = self.clock.tick(60)
+        self.dt = self.clock.tick(60)/1000
