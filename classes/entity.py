@@ -10,7 +10,7 @@ class Entity:
         self.height = size[1]
         self.image = image
     
-    def draw(self,offsetX:int,offsetY:int):
+    def draw(self):
         """Draws the self.image to the window"""
-        grefs["window"].blit(self.image,(self.x+offsetX,self.y+offsetY))
+        grefs["window"].blit(self.image,(self.x+grefs["camera"].offsetX,self.y+grefs["camera"].offsetY))
         

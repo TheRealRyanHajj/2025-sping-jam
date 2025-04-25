@@ -2,6 +2,8 @@ import pygame
 from states.states import State
 from util.grefs import grefs
 import classes.soft_body
+from classes.camera import Camera
+from classes.level import Level
 
 class GameState(State):
     def __init__(self, state_machine):
@@ -11,13 +13,10 @@ class GameState(State):
         self.events = grefs["EventMachine"].key_states
         self.window = grefs["main"].window
         self.softbody = classes.soft_body.SoftBody((350,10),20,80)
+        self.Camera = Camera()
 
-        self.surface = pygame.Surface((640, 400), pygame.SRCALPHA)
-        self.surface.fill((0, 0, 0, 0))
-        pygame.draw.rect(self.surface, (255, 255, 255), (-100, 350, 840, 50))
-        pygame.draw.rect(self.surface, (255, 255, 255), (400, 200, 100, 100))
-        pygame.draw.polygon(self.surface,(255,255,255),((200,350),(400,200),(400,350)))
-        self.ground_mask = pygame.mask.from_surface(self.surface)
+        self.Level = Level()
+        self.Level.createImage(1)
 
         self.dt = grefs["TimeMachine"].dt
         self.goBigCooldown = 0
@@ -37,8 +36,11 @@ class GameState(State):
         self.goBigCooldown -= self.dt
         
 
-        self.window.blit(self.surface,(0,0))
-        self.softbody.update(self.ground_mask)
+        self.Level.draw()
+        self.softbody.update()
+
+        self.Camera.updatePos(self.softbody)
+
         self.softbody.draw(self.window)
         
 

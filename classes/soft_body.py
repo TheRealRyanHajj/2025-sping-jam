@@ -92,6 +92,8 @@ class SoftBody:
     def __init__(self, cords, radius=50, num_points=200):
         self.dt = grefs["TimeMachine"].dt
         self.isBig = False
+        self.x = cords[0]
+        self.y = cords[1]
 
         angle_step = 2 * math.pi / num_points
         self.vertexs = [
@@ -108,19 +110,24 @@ class SoftBody:
             for i in range(num_points) for j in range(i + 1, num_points)
         ]
 
-    def update(self, mask=None, mask_offset=(0, 0)):
+    def update(self):
         for v in self.vertexs:
             v.apply_force(0, 1000)
-            if mask:
-                v.collide_and_bounce(mask, surface_offset=mask_offset)
+            v.collide_and_bounce(grefs["Level"].collideMask, (grefs["Camera"].offsetX,grefs["Camera"].offsetY))
             v.update(self.dt)
 
         for _ in range(5):
             for s in self.springs:
                 s.update()
+    
+        # Recalculate center position in world coordinates
+        self.x = sum(v.x for v in self.vertexs) / len(self.vertexs)
+        self.y = sum(v.y for v in self.vertexs) / len(self.vertexs)
+
 
     def draw(self, window):
-        points = [(v.x, v.y) for v in self.vertexs]
+        cam = grefs["Camera"]
+        points = [(v.x - cam.offsetX, v.y - cam.offsetY) for v in self.vertexs]
         pygame.draw.polygon(window, (125, 255, 125), points)
 
     def apply_velocity(self, dx=0, dy=0):
